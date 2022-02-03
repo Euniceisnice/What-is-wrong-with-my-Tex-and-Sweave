@@ -6,8 +6,13 @@ I found "texmf.cnf" but I did not manage to edit it. This is not a read-only fil
 There is no big plot in this Rnw.file.
 Compiling with Sweave does not have problems. But I need Knitr. I just need highlight in the codes in that PDF.
 
-**Problems when using Tex Live + Sweave (Knitr) on Win 11 -
+**Problems when using Tex Live + Sweave (Knitr) on Mac -
 Package fontenc Error: Encoding file 't2aenc.def' not found.
 Package fontenc Error: Encoding file 'ly1enc.def' not found.
 Latex Error: File 'xstring.sty' not found.**
+
+**----------update----------**
+The problems on Mac became "incompatible color definition".
+
+
 
