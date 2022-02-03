@@ -10,6 +10,7 @@
 
 
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 
 
 \raggedright
@@ -320,7 +321,7 @@ abline(v = mean(X1), col = "yellow", lwd = 2)
 
 <<>>=
 hist(X2)
-abline(v = mean(X2), col = "navy", lwd = 2)
+abline(v = mean(X2), col = "blue", lwd = 2)
 @
 
 \vspace*{0.5cm}
