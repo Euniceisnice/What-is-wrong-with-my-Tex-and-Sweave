@@ -1,0 +1,573 @@
+\documentclass{article}
+
+\Sexpr{knit_child('structure.tex')}
+\pgfplotsset{compat=1.18}
+
+\title{STAT 6289-11 Causal Inference \\ Homework 1}
+
+\author{Eunice Wu}
+\date{\today}
+
+
+\begin{document}
+
+
+\raggedright
+\maketitle
+
+
+<<echo=FALSE>>=
+library("infer")
+library("gmodels")
+library("caTools")
+library("dplyr")
+@
+
+
+
+\section*{Problem 1} 
+a) (2pt) Suppose $X$ and $Y$ have joint density $p(X, Y)$. How is $\mathbb{E}[Y \mid X]$ defined? (Write it out in terms of an integral and density function).  
+
+
+\vspace*{0.5cm}
+$\mathbb{E}[Y \mid X] = \int_Y y\cdot f_{Y|X}(y|x) \ dy = \int_Y y\cdot \dfrac{p(X, Y)}{f_X(x)} \ dy = \dfrac{1}{f_Y(x)}\int_Y y\cdot p(X, Y) \ dy$   
+\vspace*{0.5cm}
+
+
+b) (2pt) If $X$ and $Y$ were independent, what does $\mathbb{E}[X \mid Y]$ reduce to? (Show why this is.). 
+
+
+\vspace*{0.5cm}
+$\mathbb{E}[Y \mid X] = \int_Y y\cdot \dfrac{p(X, Y)}{f_X(x)} \ dy 
+=  \int_Y y\cdot \dfrac{f_X(x) \cdot f_Y(y)}{f_X(x)} \ dy  
+=  \int_Y y\cdot f_Y(y) \ dy  = \mathbb{E}[Y] $   
+\vspace*{0.5cm}
+
+
+c) (4pt) Draw random variables $X_{1}, X_{2}, \ldots, X_{N}$, all independently from the marginal density of $X$. Let $\bar{X}=\dfrac{1}{N} \sum_{i}^{N} X_{i}$. Is $\bar{X}$ unbiased for $\mathbb{E}[X]$ ? Prove it. (Do not just cite a theorem!)   
+
+
+\vspace*{0.5cm}
+The mean  $\bar{X}$ of a random sample is an unbiased estimate of the population moment $\mu = \mathbb{E}[X]$,
+as $
+\mathbb{E}(\bar{x})=\mathbb{E}\left(\sum \dfrac{X_{i}}{n}\right)=\dfrac{1}{n} \sum \mathbb{E}\left(X_{i}\right)=\dfrac{n}{n} \mu=\mu $   
+\vspace{0.5cm}
+
+
+d) (4pt) Derive the variance of $\bar{X}$. What happens to it as $N \rightarrow \infty$? 
+
+
+\vspace{0.5cm}
+$
+\operatorname{Var}(\bar{X})=\operatorname{Var}\left(\sum \dfrac{X_{i}}{n}\right)=\dfrac{1}{n^{2}} \sum \operatorname{Var}\left(X_{i}\right)=\dfrac{n}{n^{2}} \sigma^{2}=\dfrac{\sigma^{2}}{n}
+$  
+When $N \rightarrow \infty$, $\operatorname{Var}(\bar{X}) \rightarrow \infty$   
+\vspace*{0.5cm}
+
+\section*{Problem 2}
+
+Consider random variables $Y \in \mathbb{R}$ and $X \in \mathbb{R}^{\mathbb{P}}$, drawn from joint density $p(X, Y)$. You collect a sample of draws from this distribution, $\left\{\left(Y_{1}, X_{i}\right), \ldots,\left(Y_{N}, X_{N}\right)\right\}$.   
+Let $\mathbf{X}$ be a $N \times(1+P)$ matrix, with row $i$ equal to $\left[1 X_{i}^{\top}\right]$ (i.e., there is an intercept and then a column for each "covariate"). Consider an OLS model, $Y=\mathbf{X} \beta+\epsilon$, where $\mathbb{E}[\epsilon \mid X]=0$. 
+
+
+a) (4pt) Using matrix notation at each step, derive the ordinary least squares estimator for $\beta$ :
+
+$$
+\hat{\beta}=\underset{\beta \in \mathbb{R}^{P+1}}{\operatorname{argmin}}(\mathbf{Y}-\mathbf{X} \beta)^{\top}(\mathbf{Y}-\mathbf{X} \beta)
+$$
+
+
+\vspace*{0.5cm}
+$$
+\left[\begin{array}{c}
+Y_{1} \\
+Y_{2} \\
+\vdots \\
+\vdots \\
+Y_{N}
+\end{array}\right]_{N \times 1}=\left[\begin{array}{ccccc}
+1 & X_{11} & X_{21} & \ldots & X_{p 1} \\
+1 & X_{12} & X_{22} & \ldots & X_{p 2} \\
+\vdots & \vdots & \vdots & \ldots & \vdots \\
+\vdots & \vdots & \vdots & \ldots & \vdots \\
+1 & X_{1 n} & X_{2 n} & \ldots & X_{p N}
+\end{array}\right]_{N \times (p+1)}\left[\begin{array}{c}
+\beta_{0} \\
+\beta_{2} \\
+\vdots \\
+\beta_{p}
+\end{array}\right]_{(p+1) \times 1}+\left[\begin{array}{c}
+\varepsilon_{1} \\
+\varepsilon_{2} \\
+\vdots \\
+\vdots \\
+\varepsilon_{N}
+\end{array}\right]_{N \times 1}
+$$
+
+
+$$
+\begin{aligned}
+\varepsilon^{T} \varepsilon &=(\mathbf{Y}-\mathbf{X} \hat{\beta})^{T}(\mathbf{Y}-\mathbf{X} \hat{\beta}) \\
+&=\mathbf{Y}^{T} \mathbf{Y}-\hat{\beta}^{T} \mathbf{X}^{T} \mathbf{Y}-\mathbf{Y}^{T} \mathbf{X} \hat{\beta}+\hat{\beta}^{T} \mathbf{X}^{T} \mathbf{X} \hat{\beta} \\
+&=\mathbf{Y}^{T} \mathbf{Y}-2 \hat{\beta}^{T} \mathbf{X}^{T} \mathbf{Y}+\hat{\beta}^{T} \mathbf{X}^{\prime} \mathbf{X} \hat{\beta}
+\end{aligned} 
+$$
+
+
+$$
+\begin{aligned}
+&\dfrac{\partial \varepsilon^{T} \varepsilon}{\partial \hat{\beta}}=-2 \mathbf{X}^{\prime} \mathbf{Y}+2 \mathbf{X}^{\prime} \mathbf{X} \hat{\beta}=0 \quad
+\dfrac{\partial^2 \varepsilon^{T} \varepsilon}{\partial \hat{\beta}^2}= 2 \mathbf{X}^{T} \mathbf{X} >0
+\\
+\Rightarrow 
+&\left(\mathbf{X}^{T} \mathbf{X}\right) \hat{\beta}=\mathbf{X}^{T} \mathbf{Y}
+\\
+&\left(\mathbf{X}^{T} \mathbf{X}\right)^{-1}\left(\mathbf{X}^{T} \mathbf{X}\right) \hat{\beta}=\left(\mathbf{X}^{T} X\right)^{-1} \mathbf{X}^{T}\mathbf{Y}
+\\
+&I \hat{\beta} =\left(\mathbf{X}^{T} \mathbf{X}\right)^{-1} \mathbf{X}^{T} \mathbf{Y} \\
+&\hat{\beta} =\left(\mathbf{X}^{T} \mathbf{X}\right)^{-1} \mathbf{X}^{T} \mathbf{Y}
+\end{aligned}
+$$
+\vspace*{0.5cm}
+
+
+b) (5pt) Show $R$ code that would achieve the following:
+
+i. Construct a matrix $X$ to represent $\mathbf{X}$ in the above, with $N=100$, one column of ones, and two columns of randomly drawn numbers (from any distribution you like).
+
+<<>>= 
+
+N = 100
+X <- cbind(matrix(1:1, ncol = 1, nrow = N),  matrix(rpois(N, 5), ncol = 1), 
+           matrix(rpois(N, 10), ncol = 1))
+head(X)
+@
+\vspace*{0.5cm}
+
+
+ii. Using $\beta=\left[\begin{array}{lll}1 & 2 & 3\end{array}\right]^{\top}$, compute vector $Y$ equal to $X \beta+\epsilon$, where $\epsilon$ is drawn from a standard normal distribution.
+
+<<>>=
+beta = c(1,2,3)
+epsilon = matrix(rnorm(N, mean=0, sd=1), ncol = 1) 
+beta
+head(epsilon)
+Y = X %*% beta + epsilon
+head(Y)
+@
+
+iii. Compute $\left(X^{\top} X\right)^{-1}\left(X^{\top} Y\right)$. Use the solve function in $\mathrm{R}$.
+
+<<>>==
+beta_est = solve(t(X) %*% X)  %*% t(X)  %*% Y
+beta_est
+@
+
+iv. Compare the result to the coefficients obtained using lm with the data you have constructed.
+
+<<background = "#D3D3D3">>==
+coeff_lm <- lm(Y ~ X[,2]+X[,3])
+summary(coeff_lm)
+@
+
+c) (5pt) Prove the unbiasedness of $\hat{\beta}$ for $\beta$.
+
+\vspace*{0.5cm}
+% $Y_i = \beta_0 + \beta_1X_i + \varepsilon_i$
+% 
+% $\mathbb{E}(\varepsilon_i) = 0$
+% 
+% $\mathbb{E}(Y_i) = \mathbb{E}( \beta_0 + \beta_1X_i + \varepsilon_i) 
+% = \mathbb{E}(\beta_0) + \mathbb{E} (\beta_1X_i) + \mathbb{E}(\varepsilon_i)$
+% 
+% $\mathbb{E}(\bar{Y}) = \mathbb{E}(\dfrac{1}{n} \sum_{i=1}^n{Y_i}) 
+% = \dfrac{1}{n} \sum_{i=1}^{n} \mathbb{E}(Y_i) 
+% = \dfrac{1}{n} \sum_{i=1}^{n} \beta_0 + \beta_1X_i 
+% = \dfrac{n\beta_0}{n} + \beta_1 \cdot \dfrac{\sum_{i=1}^{n}X_i}{n}
+% = \beta_0 + \beta_1 \bar{X} $
+% 
+% $\mathbb{E}(\hat{\beta_1}) = \mathbb{E} \left(\dfrac{\sum_{i=1}^{n} (X_i - \bar{X})Y_i}{\sum_{i=1}^{n}(X_i - \bar{X})X_i}   \right) 
+% = \dfrac{\sum_{i=1}^{n} (X_i - \bar{X})\mathbb{E}(Y_i)}{\sum_{i=1}^{n}(X_i - \bar{X})X_i}   
+% =  \dfrac{\sum_{i=1}^{n} (X_i - \bar{X})(\beta_0 + \beta_1X_i)}{\sum_{i=1}^{n}(X_i - \bar{X})X_i}  
+% = \dfrac{\beta_0 \cdot \sum_{i=1}^{n} (X_i - \bar{X})}{\sum_{i=1}^{n}(X_i - \bar{X})X_i} + \dfrac{\beta_1 \cdot \sum_{i=1}^{n} (X_i - \bar{X})X_i}{\sum_{i=1}^{n}(X_i - \bar{X})X_i} 
+% = 0+\beta_1
+% = \beta_1
+% $
+% 
+% $
+% \mathbb{E}(\hat{\beta_0}) = \mathbb{E}(\bar{Y} - \hat{\beta_1} \cdot \bar{X}) = \mathbb{E}(\bar{Y}) - \bar{X}\mathbb{E}(\hat{\beta_1}) = \beta_0 + \beta_1\bar{X} - \beta_1\bar{X} = \beta_0
+% $
+% 
+% So $\hat{\beta}$ is an unbiased estimator of $\beta$. 
+% \vspace*{0.5cm}
+
+With Matrix notation: 
+
+$\hat{\beta}=\left(\mathbf{X}^{T} \mathbf{X}\right)^{-1} \mathbf{X}^{T} \mathbf{Y} =\left(\mathbf{X}^{T} \mathbf{X}\right)^{-1} \mathbf{X}^{T}(\mathbf{X} \beta+\varepsilon) =\beta+\left(\mathbf{X}^{T} \mathbf{X}\right)^{-1} \mathbf{X}^{T} \varepsilon$ 
+
+And $\left(\mathbf{X}^{T} \mathbf{X}\right)^{-1} \mathbf{X}^{T} \mathbf{X}=I$. 
+
+So 
+$\mathbb{E}[\hat{\beta}] =\mathbb{E}[\beta]+\mathbb{E}\left[\left(\mathbf{X}^{T} \mathbf{X}\right)^{-1} \mathbf{X}^{T} \varepsilon\right] 
+=\beta+\left(\mathbf{X}^{T} \mathbf{X}\right)^{-1} \mathbf{X}^{T} \mathbb{E}[\varepsilon]$
+
+
+$\mathbb{E}[\varepsilon]=0$. So
+
+
+$
+\mathbb{E}(\hat{\beta}) 
+=\mathbb{E}(\beta)+\mathbb{E}\left[\left(\mathbf{X}^{T} \mathbf{X} \right)^{-1} \mathbf{X}^{T} \varepsilon \right] 
+=\beta+\left(\mathbf{X}^{T} \mathbf{X}\right)^{-1} \mathbb{E}\left[\mathbf{X}^{T} \varepsilon\right]
+$
+
+
+As $\mathbb{E}\left(\mathbf{X}^{T} \varepsilon\right)=0$, $\mathbb{E}(\hat{\beta})  = \beta$
+\vspace*{0.5cm}
+
+
+d) (5pt) Compute the variance, with $\mathbf{X}$ taken as fixed (not random), i.e. $\mathbb{V}[\hat{\beta} \mid \mathbf{X}]$, again sticking with matrix notation. You may assume $\mathbb{E}\left[\epsilon \epsilon^{\top} \mid \mathbf{X}\right]=\sigma^{2} I_{N}$, where $I_{N}$ is the $N \times N$ identity matrix.
+
+\vspace*{0.5cm}
+$
+\begin{aligned}
+\mathbb{E}\left[(\hat{\beta}-\beta)(\hat{\beta}-\beta)^{T}\right]  &=\mathbb{E}\left[\left(\left(\mathbf{X}^{T} \mathbf{X}\right)^{-1} \mathbf{X}^{T} \varepsilon\right)\left(\left(\mathbf{X}^{T} \mathbf{X}\right)^{-1} \mathbf{X}^{T} \varepsilon\right)^{T}\right]  \\ &=\mathbb{E}\left[\left(\mathbf{X}^{T} \mathbf{X}\right)^{-1} \mathbf{X}^{T} \varepsilon \varepsilon^{T} \mathbf{X}\left(\mathbf{X}^{T} \mathbf{X}\right)^{-1}\right] \\
+&= \left(\mathbf{X}^{T} \mathbf{X}\right)^{-1} \mathbf{X}^{T} \mathbb{E}\left[\varepsilon \varepsilon ^{T}\right] \mathbf{X}\left(\mathbf{X}^{T} \mathbf{X}\right)^{-1} \\
+&=\left(\mathbf{X}^{T} \mathbf{X}\right)^{-1} \mathbf{X}^{T}\left(\sigma^{2} I\right) \mathbf{X}\left(\mathbf{X}^{T} \mathbf{X}\right)^{-1} \\
+&=\sigma^{2} I\left(\mathbf{X}^{T} \mathbf{X}\right)^{-1} \mathbf{X}^{T} \mathbf{X}\left(\mathbf{X}^{T} \mathbf{X}\right)^{-1}  \\
+&=\sigma^{2}\left(\mathbf{X}^{T} \mathbf{X}\right)^{-1}
+\end{aligned}
+$
+
+Therefore, 
+
+$\operatorname{Var}(\hat{\beta}) = 
+\mathbb{E}\left[(\hat{\beta}-\beta)(\hat{\beta}-\beta)^{T}\right] 
+= \left[\begin{array}{cccc}
+\operatorname{var}\left(\hat{\beta}_{1}\right) & \operatorname{cov}\left(\hat{\beta}_{1}, \hat{\beta}_{2}\right) & \ldots & \operatorname{cov}\left(\hat{\beta}_{1}, \hat{\beta}_{k}\right) \\
+\operatorname{cov}\left(\hat{\beta}_{2}, \hat{\beta}_{1}\right) & \operatorname{var}\left(\hat{\beta}_{2}\right) & \ldots & \operatorname{cov}\left(\hat{\beta}_{2}, \hat{\beta}_{k}\right) \\
+\vdots & \vdots & \vdots & \vdots \\
+\operatorname{cov}\left(\hat{\beta}_{k}, \hat{\beta}_{1}\right) & \operatorname{cov}\left(\hat{\beta}_{k}, \hat{\beta}_{2}\right) & \ldots & \operatorname{var}\left(\hat{\beta}_{k}\right)
+\end{array}\right]
+$
+\vspace*{0.5cm}
+
+e) (2pt) What meaning would you give to the matrix $\mathbb{E}\left[\epsilon \epsilon^{\top} \mid \mathbf{X}\right]$ ? Give an intuitive explanation of what the assumption that this matrix equals $\sigma^{2} I$ implies.
+
+\vspace*{0.5cm}
+The variance of $\varepsilon_i$ is the same for all $X_i$ and $\varepsilon_i$'s are independent. 
+\vspace*{0.5cm}
+
+
+\section*{Problem 3}
+
+Which of the following statements are true or false? For credit, explain your choice briefly
+
+a) (3pt) If there is perfect collinearity, the OLS estimator will give biased and inconsistent estimates.
+
+\vspace*{0.5cm}
+Not true. The coefficients on the collinear terms might have infinite variance if the collinearity is extreme while the estimator remains unbiased. 
+\vspace*{0.5cm}
+
+b) (3pt) A very large p-value for the estimated coefficient for an explanatory variable provides strong evidence that the variable has zero effect on the outcome.
+
+\vspace*{0.5cm}
+Not true. If the p-value is larger than the confidence level during F-test, we rejected the null hypothesis and it can be concluded that there is at least one coefficient is not zero. 
+\vspace*{0.5cm}
+
+
+c) (3pt) If an estimator is unbiased it is also consistent.
+
+\vspace*{0.5cm}
+Not true. 
+\vspace*{0.5cm}
+
+d) (3pt) You have a model $Y=X^{\top} \beta+\epsilon$, and you fit it by OLS. If the OLS residuals are uncorrelated with $X$, our estimate of $\beta$ are unbiased. 
+
+\vspace*{0.5cm}
+True. 
+$
+\mathbb{E}(\hat{\beta}) 
+=\beta+\left(\mathbf{X}^{T} \mathbf{X}\right)^{-1} \mathbb{E}\left[\mathbf{X}^{T} \varepsilon\right]
+$
+If $\mathbb{E}\left(\mathbf{X}^{T} \varepsilon\right)= \mathbb{E}(\varepsilon) = 0, \mathbb{E}(\hat{\beta})  = \beta$
+\vspace*{0.5cm}
+
+
+
+\section*{Problem 4}
+
+Suppose $X_{1} \sim N(5,2)$ and $X_{2} \sim \exp (\lambda=1)$ (where $\exp$ indicates the exponential distribution). In $\mathrm{R}$, construct two vectors, $\mathrm{X1}$ with 10000 draws from the same distribution as $X_{1}$, and $\mathrm{X2}$ with 10000 draws from the same distribution as $X_{2}$.
+
+We will take sub-samples from these two variables to evaluate the coverage probability of $95 \%$ confidence intervals using different types of data and different sample sizes.
+
+(a) (4pt) Describe the distribution of $\mathrm{X1}$ and $\mathrm{X2}$ using histograms. Mark the true (population) expectation on your plot using a line.
+
+\vspace*{0.5cm}
+<<>>=
+
+X1 <- matrix(rnorm(10000, mean = 5, sd = 1),ncol = 1)
+X2 <- matrix(rpois(10000, 1),ncol = 1)
+head(X1)
+head(X2)
+@
+
+<<>>=
+hist(X1)
+abline(v = mean(X1), col = "yellow", lwd = 2)
+@
+
+<<>>=
+hist(X2)
+abline(v = mean(X2), col = "navy", lwd = 2)
+@
+
+\vspace*{0.5cm}
+
+(b) $(4 \mathrm{pts})$ Consider for a moment the random variables $\bar{X}_{1}$ and $\bar{X}_{2}$, representing sample means. Using math (not $R$ ), give solutions for:
+
+- $\mathbb{E}\left[\bar{X}_{1}\right]$ ?
+
+- $\mathbb{E}\left[\bar{X}_{2}\right]$ ?
+
+- $\operatorname{Var}\left(\bar{X}_{1}\right)$ ?
+
+- $\operatorname{Var}\left(\bar{X}_{2}\right)$ ?
+
+\vspace*{0.5cm}
+$\mathbb{E}\left[\bar{X}_{1}\right] = 5$
+
+$\mathbb{E}\left[\bar{X}_{2}\right] = 1$
+
+$\operatorname{Var}\left(\bar{X}_{1}\right) = 2$ 
+
+$\operatorname{Var}\left(\bar{X}_{2}\right) = 1$ 
+\vspace*{0.5cm}
+
+(c) (4pts). Now, for $X_{1}$, draw 5000 sub-samples each of size $N=6$. Get the sample mean and compute the $95 \%$ confidence interval each time. What portion of the confidence intervals you computed include the true expectation? Repeat this for $X_{2}$.
+
+<<>>=
+X1_sub_sample <- matrix(sample(X1, size = 5000 *6, replace = TRUE),6, 5000)
+
+head(X1_sub_sample,5:6)
+
+X1_sub_sample_mean = apply(X1_sub_sample, 2, mean)
+
+#head(X1_sub_sample_mean)
+
+X1_sub_sample_ci = apply(X1_sub_sample, 2, function(x) ci(x))
+
+head(X1_sub_sample_ci,5:6)
+
+sum(apply(X1_sub_sample_ci, 2, function(x){ifelse(x[2] < 5 & x[3] > 5, 
+                                                  TRUE, FALSE)}))
+@
+
+
+<<>>=
+X2_sub_sample <- matrix(sample(X2, size = 5000 *6, replace = TRUE),6, 5000)
+
+head(X2_sub_sample,5:6)
+
+X2_sub_sample_mean = apply(X2_sub_sample, 2, mean)
+
+X2_sub_sample_ci = apply(X2_sub_sample, 2, function(x) ci(x))
+
+head(X2_sub_sample_ci,5:6)
+
+sum(apply(X2_sub_sample_ci, 2, function(x){ifelse(x[2] < 1 & x[3] > 1, 
+                                                  TRUE, FALSE)}))
+@
+
+
+(d) (4pt) Repeat (c) for samples of size 6, 20, 50, and 500. Report the coverage probability for each of your eight simulations in a table. How do your results change? What differences do you see between X1 and X2?
+
+<<>>=
+#X1 sampling 
+
+X1_size_6 = sum(apply(apply(matrix(sample(X1, size = 5000 *6, replace = TRUE),
+                                   6,5000), 2, function(x) ci(x)), 2, 
+                      function(x){ifelse(x[2] <5 & x[3] > 5, TRUE, FALSE)}))
+
+X1_size_20 = sum(apply(apply(matrix(sample(X1, size = 5000 *20, replace = TRUE),
+                                   20,5000), 2, function(x) ci(x)), 2, 
+                      function(x){ifelse(x[2] < 5 & x[3] > 5, TRUE, FALSE)}))
+X1_size_50 = sum(apply(apply(matrix(sample(X1, size = 5000 *50, replace = TRUE),
+                                   50,5000), 2, function(x) ci(x)), 2, 
+                      function(x){ifelse(x[2] < 5 & x[3] > 5, TRUE, FALSE)}))
+X1_size_500 = sum(apply(apply(matrix(sample(X1, size = 5000 *500, replace = TRUE),
+                                   500,5000), 2, function(x) ci(x)), 2, 
+                      function(x){ifelse(x[2] < 5 & x[3] > 5, TRUE, FALSE)}))
+X1_sampling <- data.frame("size = 6" = c(6, X1_size_6), 
+                          "size = 20" = c(20, X1_size_20), 
+                          "size = 50" = c(50, X1_size_50), 
+                          "size = 500" = c(500, X1_size_500))
+                          
+X1_sampling
+@
+
+
+
+<<>>=
+#X2 sampling 
+
+X2_size_6 = sum(apply(apply(matrix(sample(X2, size = 5000 *6, replace = TRUE),
+                                   6,5000), 2, function(x) ci(x)), 2, 
+                      function(x){ifelse(x[2] < 1 & x[3] > 1, TRUE, FALSE)}))
+
+X2_size_20 = sum(apply(apply(matrix(sample(X2, size = 5000 *20, replace = TRUE),
+                                   20,5000), 2, function(x) ci(x)), 2, 
+                      function(x){ifelse(x[2] < 1 & x[3] > 1, TRUE, FALSE)}))
+X2_size_50 = sum(apply(apply(matrix(sample(X2, size = 5000 *50, replace = TRUE),
+                                   50,5000), 2, function(x) ci(x)), 2, 
+                      function(x){ifelse(x[2] < 1 & x[3] > 1, TRUE, FALSE)}))
+X2_size_500 = sum(apply(apply(matrix(sample(X2, size = 5000 *500, replace = TRUE),
+                                   500,5000), 2, function(x) ci(x)), 2, 
+                      function(x){ifelse(x[2] < 1 & x[3] > 1, TRUE, FALSE)}))
+X2_sampling <- data.frame("size = 6" = c(6, X2_size_6), 
+                          "size = 20" = c(20, X2_size_20), 
+                          "size = 50" = c(50, X2_size_50), 
+                          "size = 500" = c(500, X2_size_500))
+                          
+X2_sampling
+
+@
+
+(e)(4pt) Explain your findings in parts (c) and (d).
+
+\vspace*{0.5cm}
+The probability of confidence interval in each sampling to include population mean is converging to $95\%$. 
+\vspace*{0.5cm}
+
+
+\section*{Problem 5}
+
+We're going to use the mtcars dataset that can be found in the R package "datasets". Import the dataset by running "library(datasets); data(mtcars)". Use "?mtcars" in R to see a description of the data.
+
+(a). (5pt) Fit a logistic regression model with the variable $\mathrm{am}$ as the response and $\mathrm{mpg}$ and $\mathrm{hp}$ as predictors. What are the estimated regression coefficients from this model? How do we interpret them here?
+
+<<>>=
+logistic_regression <- glm(data = mtcars, am ~ hp + mpg, family = "binomial")
+logistic_regression
+summary(logistic_regression)
+@
+
+As the p-value is less than 0.05, there is a statistically significant association between the response variable (am) and the predictors (mpg and hp).
+
+$\ln \dfrac{p}{1-p} = -33.60517 + 0.05504 \cdot \mathrm{hp} + 1.25961 \cdot \mathrm{mpg}$
+
+\vspace*{0.5cm}
+
+(b). (5pt) What is the predicted probability that a car is automatic if it has $\mathrm{hp}=180$ and $\mathrm{mpg}=20$ ? 
+
+\vspace*{0.5cm}
+$\dfrac{p}{1-p} = \exp(-33.60517) \cdot \exp(0.05504 \cdot 180) \cdot \exp(1.25961 \cdot 20) = 4.4559 \quad \Rightarrow p = 0.816712$
+\vspace*{0.5cm}
+
+
+(c). (5pt) Randomly split the data into a $80 \%$ train set and a $20 \%$ test set. Fit a logistic model on the training set and predict the transmission type on the test set. What is the prediction accuracy of transmission type on the test set? (Hint: if the probability of being 1 is greater than $0.5$ then set the transmission type equal to 1 , otherwise, set it to 0 )
+
+\vspace*{0.5cm}
+
+<<>>=
+split <- sample.split(mtcars, SplitRatio = 0.8)
+training_set <- subset(mtcars, split == "TRUE")
+test_set <- subset(mtcars, split == "FALSE")
+
+logistric_training_set <- glm(data = training_set, am ~ hp + mpg, family = "binomial")
+
+res <- predict(logistric_training_set, training_set, type = "response")
+
+confmatrix <- table(Actual_value = training_set$am, Predicted_value = res >0.5)
+confmatrix
+
+(confmatrix[[1,1]] + confmatrix[[2,2]]) / sum(confmatrix)
+@
+
+
+\vspace*{0.5cm}
+
+\section*{Problem 6}
+
+We will work on the "Smarket" data, which is part of the ISLR library in R. Take a look at the dataset by running "library(ISLR); summary(Smarket)". This data set consists of percentage returns for the S\&P 500 stock index over 1,250 days, from the beginning of 2001 until the end of 2005. For each date, we have recorded the percentage returns for each of the five previous trading days, Lag1 through Lag5. We have also recorded Volume (the number of shares traded on the previous day, in billions), Today (the percentage return on the date in question) and Direction (whether the market was Up or Down on this date).
+
+
+(a). (5pt) Fit a logistic regression model to predict "Direction" using Lag1 through Lag5 and Volume. What are the estimated regression coefficients from this model? How do we interpret them here?
+
+\vspace*{0.5cm}
+<<>>=
+library(ISLR)
+data(Smarket)
+
+Smarket<- Smarket %>%
+      mutate(Direction = ifelse(Direction == "Up",1,0))
+@
+
+
+
+<<>>=
+log_reg <- glm(data = Smarket, Direction ~ Lag1 + Lag2 + Lag3 + Lag4 + Lag5 + 
+                 Volume, family = "binomial")
+summary(log_reg)
+
+@
+\vspace*{0.5cm}
+
+As all the p-values are larger than 0.05, there is no significant evidence in this sample to conclude that a non-zero correlation exists.
+
+We can drop the predictors with the larger p-values. 
+
+$\ln \dfrac{p}{1-p} = -0.126000 + (-0.073074) \cdot \mathrm{Lag1} + ( -0.042301) \cdot \mathrm{Lag2} + 0.135441 \cdot \mathrm{Volume}$
+
+\vspace*{0.5cm}
+
+
+(b) (5pt) Predict the probability that the market will go up, given values of the predictors in this dataset.
+
+
+<<>>=
+test_stock <- predict(log_reg, Smarket, type = "response")
+summary(test_stock)
+
+@
+
+It is more likely to go up according to this logistic regression result. 
+
+\vspace*{0.5cm}
+
+(c) (5pt) Predict whether the market will go up or down on the values of the predictors in this dataset. What is the prediction accuracy (this is your training accuracy)?
+
+<<>>=
+
+confmatrix_stock <- table(Actual_value = Smarket$Direction, 
+                          Predicted_value = test_stock >0.5)
+confmatrix_stock
+
+(confmatrix_stock[[1,1]] + confmatrix_stock[[2,2]]) / sum(confmatrix_stock)
+@
+
+
+(d) (5pt) Now we fit the model using the past data, and then examine how well it predicts future data, which is more like the reality. To implement this strategy, first create the training data corresponding to the observations from 2001 through 2004 and testing data from the observations in 2005 . Fit a logistic regression model using the training data and use the model to predict for the testing data. What is the prediction accuracy (this is your testing accuracy)?
+
+<<>>=
+
+Smarket_2004 <- Smarket %>%  filter(Year < 2005)
+Smarket_2005 <- Smarket %>%  filter(Year > 2004)
+
+log_reg_2004 <- glm(data = Smarket_2004, Direction ~ 
+                      Lag1 + Lag2 + Lag3 + Lag4 + Lag5 + Volume, 
+                    family = "binomial")
+
+test_stock_2005 <- predict(log_reg_2004, Smarket_2005, type = "response")
+
+confmatrix_stock <- table(Actual_value = Smarket_2005$Direction, 
+                          Predicted_value = test_stock_2005 >0.5)
+confmatrix_stock
+
+(confmatrix_stock[[1,1]] + confmatrix_stock[[2,2]]) / sum(confmatrix_stock)
+@
+
+
+
+\end{document}
