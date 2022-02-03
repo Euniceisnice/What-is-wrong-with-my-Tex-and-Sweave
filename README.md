@@ -11,8 +11,17 @@ Package fontenc Error: Encoding file 't2aenc.def' not found.
 Package fontenc Error: Encoding file 'ly1enc.def' not found.
 Latex Error: File 'xstring.sty' not found.**
 
-**----------update----------**
+**----------update----------** 
+
 The problems on Mac became "incompatible color definition".
 
 
+**----------updat2e----------** 
+Removed "\usepackage{tikz}' and anything relevant with tikz from 'structure' and installed tikzdevice package in R. 
+
+The R function "ci" for calculating confidence interval generates warning messages by default. Added "warning = FALSE" in the code chuncks with this function to avoid "dimension too large" error. 
+
+**Mac** problem: ! Package tikz Error: Sorry, image externalization failed: the resulting image was EMPTY; Package xcolor Warning: Incompatabile color definition on (a lot of lines)
+
+**Win 11** problem: ! Package tikz Error: Sorry, image externalization failed: the resulting image was EMPTY. 
 

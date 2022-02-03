@@ -1,7 +1,7 @@
 \documentclass{article}
 
 \Sexpr{knit_child('structure.tex')}
-%\pgfplotsset{compat=1.18}
+\pgfplotsset{compat=1.18}
 
 \title{STAT 6289-11 Causal Inference \\ Homework 1}
 
@@ -10,6 +10,14 @@
 
 
 \begin{document}
+
+<<include=FALSE>>=
+library(knitr)
+opts_chunk$set(
+concordance=TRUE
+)
+@
+
 
 
 \raggedright
@@ -21,8 +29,6 @@ library("infer")
 library("gmodels")
 library("caTools")
 library("dplyr")
-library("tikzDevice")
-@
 
 
 
@@ -137,13 +143,12 @@ b) (5pt) Show $R$ code that would achieve the following:
 
 i. Construct a matrix $X$ to represent $\mathbf{X}$ in the above, with $N=100$, one column of ones, and two columns of randomly drawn numbers (from any distribution you like).
 
-<<>>= 
+<<>>=
 
 N = 100
 X <- cbind(matrix(1:1, ncol = 1, nrow = N),  matrix(rpois(N, 5), ncol = 1), 
            matrix(rpois(N, 10), ncol = 1))
 head(X)
-@
 \vspace*{0.5cm}
 
 
@@ -156,21 +161,18 @@ beta
 head(epsilon)
 Y = X %*% beta + epsilon
 head(Y)
-@
 
 iii. Compute $\left(X^{\top} X\right)^{-1}\left(X^{\top} Y\right)$. Use the solve function in $\mathrm{R}$.
 
 <<>>==
 beta_est = solve(t(X) %*% X)  %*% t(X)  %*% Y
 beta_est
-@
 
 iv. Compare the result to the coefficients obtained using lm with the data you have constructed.
 
-<<>>==
+<<background = "#D3D3D3">>==
 coeff_lm <- lm(Y ~ X[,2]+X[,3])
 summary(coeff_lm)
-@
 
 c) (5pt) Prove the unbiasedness of $\hat{\beta}$ for $\beta$.
 
@@ -312,17 +314,14 @@ X1 <- matrix(rnorm(10000, mean = 5, sd = 1),ncol = 1)
 X2 <- matrix(rpois(10000, 1),ncol = 1)
 head(X1)
 head(X2)
-@
 
-<<fig=TRUE,height=2,width=5>>=
+<<>>=
 hist(X1)
 abline(v = mean(X1), col = "yellow", lwd = 2)
-@
 
-<<fig=TRUE,height=2,width=5>>=
+<<>>=
 hist(X2)
 abline(v = mean(X2), col = "blue", lwd = 2)
-@
 
 \vspace*{0.5cm}
 
@@ -348,7 +347,7 @@ $\operatorname{Var}\left(\bar{X}_{2}\right) = 1$
 
 (c) (4pts). Now, for $X_{1}$, draw 5000 sub-samples each of size $N=6$. Get the sample mean and compute the $95 \%$ confidence interval each time. What portion of the confidence intervals you computed include the true expectation? Repeat this for $X_{2}$.
 
-<<warning =FALSE>>=
+<<>>=
 X1_sub_sample <- matrix(sample(X1, size = 5000 *6, replace = TRUE),6, 5000)
 
 head(X1_sub_sample,5:6)
@@ -363,10 +362,9 @@ head(X1_sub_sample_ci,5:6)
 
 sum(apply(X1_sub_sample_ci, 2, function(x){ifelse(x[2] < 5 & x[3] > 5, 
                                                   TRUE, FALSE)}))
-@
 
 
-<<warning =FALSE>>=
+<<>>=
 X2_sub_sample <- matrix(sample(X2, size = 5000 *6, replace = TRUE),6, 5000)
 
 head(X2_sub_sample,5:6)
@@ -379,12 +377,11 @@ head(X2_sub_sample_ci,5:6)
 
 sum(apply(X2_sub_sample_ci, 2, function(x){ifelse(x[2] < 1 & x[3] > 1, 
                                                   TRUE, FALSE)}))
-@
 
 
 (d) (4pt) Repeat (c) for samples of size 6, 20, 50, and 500. Report the coverage probability for each of your eight simulations in a table. How do your results change? What differences do you see between X1 and X2?
 
-<<warning =FALSE>>=
+<<>>=
 #X1 sampling 
 
 X1_size_6 = sum(apply(apply(matrix(sample(X1, size = 5000 *6, replace = TRUE),
@@ -406,11 +403,10 @@ X1_sampling <- data.frame("size = 6" = c(6, X1_size_6),
                           "size = 500" = c(500, X1_size_500))
                           
 X1_sampling
-@
 
 
 
-<<warning =FALSE>>=
+<<>>=
 #X2 sampling 
 
 X2_size_6 = sum(apply(apply(matrix(sample(X2, size = 5000 *6, replace = TRUE),
@@ -433,7 +429,6 @@ X2_sampling <- data.frame("size = 6" = c(6, X2_size_6),
                           
 X2_sampling
 
-@
 
 (e)(4pt) Explain your findings in parts (c) and (d).
 
@@ -452,7 +447,6 @@ We're going to use the mtcars dataset that can be found in the R package "datase
 logistic_regression <- glm(data = mtcars, am ~ hp + mpg, family = "binomial")
 logistic_regression
 summary(logistic_regression)
-@
 
 As the p-value is less than 0.05, there is a statistically significant association between the response variable (am) and the predictors (mpg and hp).
 
@@ -484,7 +478,6 @@ confmatrix <- table(Actual_value = training_set$am, Predicted_value = res >0.5)
 confmatrix
 
 (confmatrix[[1,1]] + confmatrix[[2,2]]) / sum(confmatrix)
-@
 
 
 \vspace*{0.5cm}
@@ -503,7 +496,6 @@ data(Smarket)
 
 Smarket<- Smarket %>%
       mutate(Direction = ifelse(Direction == "Up",1,0))
-@
 
 
 
@@ -512,7 +504,6 @@ log_reg <- glm(data = Smarket, Direction ~ Lag1 + Lag2 + Lag3 + Lag4 + Lag5 +
                  Volume, family = "binomial")
 summary(log_reg)
 
-@
 \vspace*{0.5cm}
 
 As all the p-values are larger than 0.05, there is no significant evidence in this sample to conclude that a non-zero correlation exists.
@@ -531,7 +522,6 @@ $\ln \dfrac{p}{1-p} = -0.126000 + (-0.073074) \cdot \mathrm{Lag1} + ( -0.042301)
 test_stock <- predict(log_reg, Smarket, type = "response")
 summary(test_stock)
 
-@
 
 It is more likely to go up according to this logistic regression result. 
 
@@ -546,7 +536,6 @@ confmatrix_stock <- table(Actual_value = Smarket$Direction,
 confmatrix_stock
 
 (confmatrix_stock[[1,1]] + confmatrix_stock[[2,2]]) / sum(confmatrix_stock)
-@
 
 
 (d) (5pt) Now we fit the model using the past data, and then examine how well it predicts future data, which is more like the reality. To implement this strategy, first create the training data corresponding to the observations from 2001 through 2004 and testing data from the observations in 2005 . Fit a logistic regression model using the training data and use the model to predict for the testing data. What is the prediction accuracy (this is your testing accuracy)?
@@ -567,7 +556,6 @@ confmatrix_stock <- table(Actual_value = Smarket_2005$Direction,
 confmatrix_stock
 
 (confmatrix_stock[[1,1]] + confmatrix_stock[[2,2]]) / sum(confmatrix_stock)
-@
 
 
 
