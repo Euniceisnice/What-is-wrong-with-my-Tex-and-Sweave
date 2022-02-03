@@ -7,7 +7,7 @@ There is no big plot in this Rnw.file.
 Compiling with Sweave does not have problems. But I need Knitr. I just need highlight in the codes in that PDF.
 
 **Problems when using Tex Live + Sweave (Knitr) on Win 11 -
-Package fontenc Error: Ecoding file 't2aenc.def' not found.
-Package fontenc Error: Ecoding file 'ly1enc.def' not found.
+Package fontenc Error: Encoding file 't2aenc.def' not found.
+Package fontenc Error: Encoding file 'ly1enc.def' not found.
 Latex Error: File 'xstring.sty' not found.**
 
