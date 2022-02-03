@@ -16,7 +16,8 @@ Latex Error: File 'xstring.sty' not found.**
 The problems on Mac became "incompatible color definition".
 
 
-**----------updat2e----------** 
+**----------update2----------** 
+
 Removed "\usepackage{tikz}' and anything relevant with tikz from 'structure' and installed tikzdevice package in R. 
 
 The R function "ci" for calculating confidence interval generates warning messages by default. Added "warning = FALSE" in the code chuncks with this function to avoid "dimension too large" error. 
