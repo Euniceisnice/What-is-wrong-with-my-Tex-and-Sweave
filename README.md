@@ -26,3 +26,21 @@ The R function "ci" for calculating confidence interval generates warning messag
 
 **Win 11** problem: ! Package tikz Error: Sorry, image externalization failed: the resulting image was EMPTY. 
 
+**----------update3----------** 
+
+Problem solve! Mac and Win both can compile a PDF now. 
+
+What is remaining about tikz in my strucutre tex file to make it work:
+
+\usepackage{tikz}
+
+\usetikzlibrary{matrix}
+
+\usetikzlibrary{babel}
+
+\usepackage{pgfplots}
+
+\usepgfplotslibrary{external}
+
+
+I removed "\tikzexternalize{main}"

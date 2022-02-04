@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.1.19)  3 FEB 2022 17:58
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.1.19)  3 FEB 2022 19:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -961,14 +961,9 @@ with kernel methods
 )
 (/usr/local/texlive/2021basic/texmf-dist/tex/generic/pgf/frontendlayer/tikz/lib
 raries/tikzexternalshared.code.tex)))
-No auxiliary output files.
-
-\w@pgfexternal@auxout=\write4
-Package TikZ externalization: calling \geometry{driver=none} during externaliza
-tion.
-
 \c@theorem=\count326
 \c@Question=\count327
+
 (/usr/local/texlive/2021basic/texmf-dist/tex/latex/upquote/upquote.sty
 Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verba
 tim
@@ -983,7 +978,9 @@ TLF.
 LaTeX Font Info:    Font shape `T1/XCharter-TLF/m/n' will be
 (Font)              scaled to size 10.0pt on input line 326.
 
-No file main.aux.
+(./Causal_Inference_HW1_Eunice_Wu_Mac.aux)
+\openout1 = `Causal_Inference_HW1_Eunice_Wu_Mac.aux'.
+
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 326.
 LaTeX Font Info:    ... okay on input line 326.
 LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 326.
@@ -995,6 +992,7 @@ LaTeX Font Info:    ... okay on input line 326.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 326.
 LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 3
 26.
+
 (/usr/local/texlive/2021basic/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
@@ -1023,9 +1021,10 @@ File: ly1ptm.fd 2001/02/01 font definitions for LY1/ptm using Berry names.
 LaTeX Font Info:    ... okay on input line 326.
 \c@lstlisting=\count328
 
-*geometry* detected driver: <none>
+*geometry* driver: auto-detecting
+*geometry* detected driver: xetex
 *geometry* verbose mode - [ preamble ] result:
-* driver: \Gm@driver 
+* driver: xetex
 * paper: a4paper
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
@@ -1056,11 +1055,8 @@ LaTeX Font Info:    ... okay on input line 326.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-
-Package pgfplots Warning: running in backwards compatibility mode (unsuitable t
-ick labels; missing features). Consider writing \pgfplotsset{compat=1.18} into 
-your preamble.
- on input line 326.
+Package pgfplots notification 'compat/show suggested version=true': document ha
+s been generated with the most recent feature set (\pgfplotsset{compat=1.18}).
 
 LaTeX Font Info:    Font shape `T1/XCharter-TLF/m/n' will be
 (Font)              scaled to size 17.28pt on input line 330.
@@ -1081,168 +1077,97 @@ LaTeX Font Info:    Trying to load font information for U+stmry on input line 3
 30.
 
 (/usr/local/texlive/2021basic/texmf-dist/tex/latex/stmaryrd/Ustmry.fd)
+LaTeX Font Info:    Font shape `T1/XCharter-TLF/m/n' will be
+(Font)              scaled to size 14.4pt on input line 337.
+LaTeX Font Info:    Font shape `T1/XCharter-TLF/b/n' will be
+(Font)              scaled to size 14.4pt on input line 337.
+ [1
 
-Package xcolor Warning: Incompatible color definition on input line 334.
+]
 
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 3
-37.
+Package xcolor Warning: Incompatible color definition on input line 449.
+
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 4
+50.
 (/usr/local/texlive/2021basic/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 
-Package xcolor Warning: Incompatible color definition on input line 337.
+Package xcolor Warning: Incompatible color definition on input line 473.
+
+[2]
+
+Package xcolor Warning: Incompatible color definition on input line 513.
 
 
-Package xcolor Warning: Incompatible color definition on input line 339.
-
-
-Package xcolor Warning: Incompatible color definition on input line 341.
-
-
-Package xcolor Warning: Incompatible color definition on input line 343.
-
-LaTeX Font Info:    Font shape `T1/XCharter-TLF/m/n' will be
-(Font)              scaled to size 14.4pt on input line 348.
-LaTeX Font Info:    Font shape `T1/XCharter-TLF/b/n' will be
-(Font)              scaled to size 14.4pt on input line 348.
-
-Package xcolor Warning: Incompatible color definition on input line 460.
-
-
-Package xcolor Warning: Incompatible color definition on input line 484.
-
-
-Package xcolor Warning: Incompatible color definition on input line 524.
-
-
-Package xcolor Warning: Incompatible color definition on input line 541.
+Package xcolor Warning: Incompatible color definition on input line 530.
 
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-566.
+555.
 (/usr/local/texlive/2021basic/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
+) [3] [4]
 
-Package xcolor Warning: Incompatible color definition on input line 705.
-
-
-Package xcolor Warning: Incompatible color definition on input line 736.
-
-The command '\includegraphics [width=\maxwidth ]{figure/unnamed-chunk-7-1}' has
- been optimized away. Use '/tikz/external/optimize=false' to disable this.
-LaTeX Font Info:    Font shape `T1/XCharter-TLF/m/sc' will be
-(Font)              scaled to size 10.0pt on input line 742.
-
-Package xcolor Warning: Incompatible color definition on input line 746.
-
-The command '\includegraphics [width=\maxwidth ]{figure/unnamed-chunk-8-1}' has
- been optimized away. Use '/tikz/external/optimize=false' to disable this.
-
-Package xcolor Warning: Incompatible color definition on input line 780.
+Package xcolor Warning: Incompatible color definition on input line 694.
 
 
-Package xcolor Warning: Incompatible color definition on input line 788.
+Package xcolor Warning: Incompatible color definition on input line 725.
 
+File: figure/unnamed-chunk-7-1.pdf Graphic file (type pdf)
+<use figure/unnamed-chunk-7-1.pdf>
 
-Package xcolor Warning: Incompatible color definition on input line 799.
+Package xcolor Warning: Incompatible color definition on input line 735.
 
+File: figure/unnamed-chunk-8-1.pdf Graphic file (type pdf)
+<use figure/unnamed-chunk-8-1.pdf>
+[5]
+
+Package xcolor Warning: Incompatible color definition on input line 769.
+
+[6]
 
 Package xcolor Warning: Incompatible color definition on input line 811.
 
 
-Package xcolor Warning: Incompatible color definition on input line 819.
+Package xcolor Warning: Incompatible color definition on input line 853.
+
+[7]
+
+Package xcolor Warning: Incompatible color definition on input line 888.
 
 
-Package xcolor Warning: Incompatible color definition on input line 828.
+Package xcolor Warning: Incompatible color definition on input line 934.
 
-
-Package xcolor Warning: Incompatible color definition on input line 842.
-
-
-Package xcolor Warning: Incompatible color definition on input line 877.
-
-
-Package xcolor Warning: Incompatible color definition on input line 923.
-
-
-Package xcolor Warning: Incompatible color definition on input line 989.
-
-
-Package xcolor Warning: Incompatible color definition on input line 995.
-
+[8]
 
 Package xcolor Warning: Incompatible color definition on input line 1000.
 
+[9]
 
-Package xcolor Warning: Incompatible color definition on input line 1005.
-
-
-Package xcolor Warning: Incompatible color definition on input line 1010.
+Package xcolor Warning: Incompatible color definition on input line 1040.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1015.
+Package xcolor Warning: Incompatible color definition on input line 1054.
+
+[10]
+
+Package xcolor Warning: Incompatible color definition on input line 1105.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1020.
+Package xcolor Warning: Incompatible color definition on input line 1124.
 
+[11]
 
-Package xcolor Warning: Incompatible color definition on input line 1025.
+Package xcolor Warning: Incompatible color definition on input line 1149.
 
-
-Package xcolor Warning: Incompatible color definition on input line 1030.
-
-
-Package xcolor Warning: Incompatible color definition on input line 1045.
-
-
-Package xcolor Warning: Incompatible color definition on input line 1059.
-
-
-Package xcolor Warning: Incompatible color definition on input line 1110.
-
-
-Package xcolor Warning: Incompatible color definition on input line 1129.
-
-
-Package xcolor Warning: Incompatible color definition on input line 1154.
-
-\openout3 = `Causal_Inference_HW1_Eunice_Wu_Mac.dpth'.
-
-
-! Package tikz Error: Sorry, image externalization failed: the resulting image 
-was EMPTY. I tried to externalize 'Causal_Inference_HW1_Eunice_Wu_Mac', but it 
-seems there is no such image in the document!?  
-   You are currently using 'mode=convert with system call'. This problem can ha
-ppen if the image (or one of the images preceding it) was declared inside of a 
-\label{} (i.e. in the .aux file): 'convert with system call' has no access to t
-he main aux file.
-   Possible solutions in this case:
-   (a) Try using 'mode=list and make',
-   (b) Issue the externalization command 'xelatex -halt-on-error -interaction=b
-atchmode -jobname "Causal_Inference_HW1_Eunice_Wu_Mac" "main"' *manually* (also
- check the preceding externalized images, perhaps the file name sequence is not
- correct).
-   Repeat: the resulting image was EMPTY, your attention is required .
-
-See the tikz package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1186 \end{document}
-                     
-This error message was generated by an \errmessage
-command, so I can't give any explicit help.
-Pretend that you're Hercule Poirot: Examine all clues,
-and deduce the truth by order and method.
-
- ) 
+[12] (./Causal_Inference_HW1_Eunice_Wu_Mac.aux) ) 
 Here is how much of TeX's memory you used:
- 29162 strings out of 478436
- 704388 string characters out of 5853929
- 1156040 words of memory out of 5000000
- 48487 multiletter control sequences out of 15000+600000
- 453627 words of font info for 74 fonts, out of 8000000 for 9000
+ 29176 strings out of 478436
+ 704940 string characters out of 5853929
+ 1163040 words of memory out of 5000000
+ 48495 multiletter control sequences out of 15000+600000
+ 447094 words of font info for 73 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
  107i,11n,111p,747b,479s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-No pages of output.
+Output written on Causal_Inference_HW1_Eunice_Wu_Mac.pdf (12 pages).

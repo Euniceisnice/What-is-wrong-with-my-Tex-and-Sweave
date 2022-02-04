@@ -1,7 +1,7 @@
 \documentclass{article}
 
 \Sexpr{knit_child('structure.tex')}
-%\pgfplotsset{compat=1.18}
+\pgfplotsset{compat=1.18}
 
 \title{STAT 6289-11 Causal Inference \\ Homework 1}
 
@@ -16,7 +16,7 @@
 \maketitle
 
 
-<<echo=FALSE>>=
+<<include=FALSE>>=
 library("infer")
 library("gmodels")
 library("caTools")
@@ -314,12 +314,12 @@ head(X1)
 head(X2)
 @
 
-<<fig=TRUE,height=2,width=5>>=
+<<fig=TRUE,fig.width=5, fig.height=3>>=
 hist(X1)
 abline(v = mean(X1), col = "yellow", lwd = 2)
 @
 
-<<fig=TRUE,height=2,width=5>>=
+<<fig=TRUE,fig.width=5, fig.height=3>>=
 hist(X2)
 abline(v = mean(X2), col = "blue", lwd = 2)
 @

@@ -140,7 +140,7 @@
 \usepackage{pgfplots}
 \usepackage{tikz}
 \usepgfplotslibrary{external}
-\tikzexternalize{main}
+%\tikzexternalize{main}
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{proposition}[theorem]{Proposition}
@@ -316,7 +316,7 @@
 }{
 	\end{mdframed}
 }
-%\pgfplotsset{compat=1.18}
+\pgfplotsset{compat=1.18}
 
 \title{STAT 6289-11 Causal Inference \\ Homework 1}
 
@@ -330,18 +330,7 @@
 \maketitle
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in library("{}caTools"{}): there is no package called 'caTools'}}
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# \\\#\# Attaching package: 'dplyr'}}
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The following objects are masked from 'package:stats':\\\#\# \\\#\# \ \ \ \ filter, lag}}
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The following objects are masked from 'package:base':\\\#\# \\\#\# \ \ \ \ intersect, setdiff, setequal, union}}\end{kframe}
-\end{knitrout}
 
 
 
@@ -466,12 +455,12 @@ i. Construct a matrix $X$ to represent $\mathbf{X}$ in the above, with $N=100$, 
 \end{alltt}
 \begin{verbatim}
 ##      [,1] [,2] [,3]
-## [1,]    1    3   16
-## [2,]    1    5    9
-## [3,]    1    5   10
-## [4,]    1    4   14
-## [5,]    1    5   11
-## [6,]    1    4   11
+## [1,]    1    6   13
+## [2,]    1    5   14
+## [3,]    1    4    4
+## [4,]    1    7    8
+## [5,]    1    1   12
+## [6,]    1    4   13
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -494,13 +483,13 @@ ii. Using $\beta=\left[\begin{array}{lll}1 & 2 & 3\end{array}\right]^{\top}$, co
 \hlkwd{head}\hlstd{(epsilon)}
 \end{alltt}
 \begin{verbatim}
-##             [,1]
-## [1,]  1.30987832
-## [2,]  0.75053464
-## [3,] -0.08081351
-## [4,]  0.59799420
-## [5,]  0.19383051
-## [6,]  0.56638870
+##            [,1]
+## [1,]  0.3260207
+## [2,]  0.0932062
+## [3,] -0.2524867
+## [4,] -0.2877227
+## [5,]  0.6339740
+## [6,] -0.6630345
 \end{verbatim}
 \begin{alltt}
 \hlstd{Y} \hlkwb{=} \hlstd{X} \hlopt{%*%} \hlstd{beta} \hlopt{+} \hlstd{epsilon}
@@ -508,12 +497,12 @@ ii. Using $\beta=\left[\begin{array}{lll}1 & 2 & 3\end{array}\right]^{\top}$, co
 \end{alltt}
 \begin{verbatim}
 ##          [,1]
-## [1,] 56.30988
-## [2,] 38.75053
-## [3,] 40.91919
-## [4,] 51.59799
-## [5,] 44.19383
-## [6,] 42.56639
+## [1,] 52.32602
+## [2,] 53.09321
+## [3,] 20.74751
+## [4,] 38.71228
+## [5,] 39.63397
+## [6,] 47.33697
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -528,9 +517,9 @@ iii. Compute $\left(X^{\top} X\right)^{-1}\left(X^{\top} Y\right)$. Use the solv
 \end{alltt}
 \begin{verbatim}
 ##           [,1]
-## [1,] 0.9239602
-## [2,] 2.0123337
-## [3,] 3.0021656
+## [1,] 0.6751192
+## [2,] 1.9567181
+## [3,] 3.0473170
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -550,19 +539,19 @@ iv. Compare the result to the coefficients obtained using lm with the data you h
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -2.95782 -0.62669  0.05389  0.72583  2.47246 
+## -2.15919 -0.54278  0.04758  0.52232  2.39986 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  0.92396    0.43275   2.135   0.0353 *  
-## X[, 2]       2.01233    0.05040  39.926   <2e-16 ***
-## X[, 3]       3.00217    0.03615  83.045   <2e-16 ***
+## (Intercept)  0.67512    0.37629   1.794   0.0759 .  
+## X[, 2]       1.95672    0.04659  42.001   <2e-16 ***
+## X[, 3]       3.04732    0.03161  96.401   <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 1.111 on 97 degrees of freedom
-## Multiple R-squared:  0.9889,	Adjusted R-squared:  0.9887 
-## F-statistic:  4319 on 2 and 97 DF,  p-value: < 2.2e-16
+## Residual standard error: 0.9595 on 97 degrees of freedom
+## Multiple R-squared:  0.9922,	Adjusted R-squared:  0.992 
+## F-statistic:  6136 on 2 and 97 DF,  p-value: < 2.2e-16
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -710,24 +699,24 @@ We will take sub-samples from these two variables to evaluate the coverage proba
 \end{alltt}
 \begin{verbatim}
 ##          [,1]
-## [1,] 4.654673
-## [2,] 4.951970
-## [3,] 6.351706
-## [4,] 5.577559
-## [5,] 3.769903
-## [6,] 5.205229
+## [1,] 5.257544
+## [2,] 4.818645
+## [3,] 6.778251
+## [4,] 3.542059
+## [5,] 4.783530
+## [6,] 5.105978
 \end{verbatim}
 \begin{alltt}
 \hlkwd{head}\hlstd{(X2)}
 \end{alltt}
 \begin{verbatim}
 ##      [,1]
-## [1,]    3
+## [1,]    1
 ## [2,]    0
 ## [3,]    0
-## [4,]    3
-## [5,]    0
-## [6,]    2
+## [4,]    2
+## [5,]    2
+## [6,]    3
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -783,9 +772,15 @@ $\operatorname{Var}\left(\bar{X}_{2}\right) = 1$
 
 \hlkwd{head}\hlstd{(X1_sub_sample,}\hlnum{5}\hlopt{:}\hlnum{6}\hlstd{)}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in head.matrix(X1\_sub\_sample, 5:6): length(n) == 1L is not TRUE}}\begin{alltt}
+\begin{verbatim}
+##          [,1]     [,2]     [,3]     [,4]     [,5]     [,6]
+## [1,] 3.085447 5.183113 5.758012 4.273961 5.115787 5.731389
+## [2,] 5.329938 3.545789 5.154577 5.053304 3.081665 4.560495
+## [3,] 4.433019 7.033668 5.493081 3.634116 5.217159 6.808585
+## [4,] 5.897117 5.747834 4.940110 5.033851 3.941513 4.967928
+## [5,] 5.856407 5.832355 4.256276 4.470993 5.094903 4.124827
+\end{verbatim}
+\begin{alltt}
 \hlstd{X1_sub_sample_mean} \hlkwb{=} \hlkwd{apply}\hlstd{(X1_sub_sample,} \hlnum{2}\hlstd{, mean)}
 
 \hlcom{#head(X1_sub_sample_mean)}
@@ -794,14 +789,19 @@ $\operatorname{Var}\left(\bar{X}_{2}\right) = 1$
 
 \hlkwd{head}\hlstd{(X1_sub_sample_ci,}\hlnum{5}\hlopt{:}\hlnum{6}\hlstd{)}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in head.matrix(X1\_sub\_sample\_ci, 5:6): length(n) == 1L is not TRUE}}\begin{alltt}
+\begin{verbatim}
+##                 [,1]     [,2]      [,3]      [,4]      [,5]      [,6]
+## Estimate   5.0559698 5.506918 5.1162317 4.7669467 4.7436136 5.0104831
+## CI lower   3.8917212 4.311981 4.5757271 3.8715399 3.6432567 3.8567714
+## CI upper   6.2202184 6.701856 5.6567364 5.6623536 5.8439705 6.1641948
+## Std. Error 0.4529125 0.464851 0.2102655 0.3483285 0.4280575 0.4488134
+\end{verbatim}
+\begin{alltt}
 \hlkwd{sum}\hlstd{(}\hlkwd{apply}\hlstd{(X1_sub_sample_ci,} \hlnum{2}\hlstd{,} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{)\{}\hlkwd{ifelse}\hlstd{(x[}\hlnum{2}\hlstd{]} \hlopt{<} \hlnum{5} \hlopt{&} \hlstd{x[}\hlnum{3}\hlstd{]} \hlopt{>} \hlnum{5}\hlstd{,}
                                                   \hlnum{TRUE}\hlstd{,} \hlnum{FALSE}\hlstd{)\}))}
 \end{alltt}
 \begin{verbatim}
-## [1] 4751
+## [1] 4752
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -814,23 +814,34 @@ $\operatorname{Var}\left(\bar{X}_{2}\right) = 1$
 
 \hlkwd{head}\hlstd{(X2_sub_sample,}\hlnum{5}\hlopt{:}\hlnum{6}\hlstd{)}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in head.matrix(X2\_sub\_sample, 5:6): length(n) == 1L is not TRUE}}\begin{alltt}
+\begin{verbatim}
+##      [,1] [,2] [,3] [,4] [,5] [,6]
+## [1,]    0    1    2    0    1    1
+## [2,]    1    2    1    0    1    2
+## [3,]    2    0    1    1    0    0
+## [4,]    0    2    0    3    0    1
+## [5,]    1    1    1    0    0    2
+\end{verbatim}
+\begin{alltt}
 \hlstd{X2_sub_sample_mean} \hlkwb{=} \hlkwd{apply}\hlstd{(X2_sub_sample,} \hlnum{2}\hlstd{, mean)}
 
 \hlstd{X2_sub_sample_ci} \hlkwb{=} \hlkwd{apply}\hlstd{(X2_sub_sample,} \hlnum{2}\hlstd{,} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{)} \hlkwd{ci}\hlstd{(x))}
 
 \hlkwd{head}\hlstd{(X2_sub_sample_ci,}\hlnum{5}\hlopt{:}\hlnum{6}\hlstd{)}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in head.matrix(X2\_sub\_sample\_ci, 5:6): length(n) == 1L is not TRUE}}\begin{alltt}
+\begin{verbatim}
+##                  [,1]       [,2]      [,3]       [,4]        [,5]      [,6]
+## Estimate   0.83333333 1.00000000 1.0000000  0.8333333  0.50000000 1.1666667
+## CI lower   0.04334688 0.06135623 0.3362786 -0.3935044 -0.07479957 0.3766802
+## CI upper   1.62331978 1.93864377 1.6637214  2.0601710  1.07479957 1.9566531
+## Std. Error 0.30731815 0.36514837 0.2581989  0.4772607  0.22360680 0.3073181
+\end{verbatim}
+\begin{alltt}
 \hlkwd{sum}\hlstd{(}\hlkwd{apply}\hlstd{(X2_sub_sample_ci,} \hlnum{2}\hlstd{,} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{)\{}\hlkwd{ifelse}\hlstd{(x[}\hlnum{2}\hlstd{]} \hlopt{<} \hlnum{1} \hlopt{&} \hlstd{x[}\hlnum{3}\hlstd{]} \hlopt{>} \hlnum{1}\hlstd{,}
                                                   \hlnum{TRUE}\hlstd{,} \hlnum{FALSE}\hlstd{)\}))}
 \end{alltt}
 \begin{verbatim}
-## [1] 4677
+## [1] 4652
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -866,7 +877,7 @@ $\operatorname{Var}\left(\bar{X}_{2}\right) = 1$
 \begin{verbatim}
 ##   size...6 size...20 size...50 size...500
 ## 1        6        20        50        500
-## 2     4756      4753      4747       4740
+## 2     4763      4744      4750       4793
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -901,7 +912,7 @@ $\operatorname{Var}\left(\bar{X}_{2}\right) = 1$
 \begin{verbatim}
 ##   size...6 size...20 size...50 size...500
 ## 1        6        20        50        500
-## 2     4649      4663      4734       4682
+## 2     4625      4669      4742       4727
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -989,45 +1000,29 @@ $\dfrac{p}{1-p} = \exp(-33.60517) \cdot \exp(0.05504 \cdot 180) \cdot \exp(1.259
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{split} \hlkwb{<-} \hlkwd{sample.split}\hlstd{(mtcars,} \hlkwc{SplitRatio} \hlstd{=} \hlnum{0.8}\hlstd{)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in sample.split(mtcars, SplitRatio = 0.8): could not find function "{}sample.split"{}}}\begin{alltt}
 \hlstd{training_set} \hlkwb{<-} \hlkwd{subset}\hlstd{(mtcars, split} \hlopt{==} \hlstr{"TRUE"}\hlstd{)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in split == "{}TRUE"{}: comparison (1) is possible only for atomic and list types}}\begin{alltt}
 \hlstd{test_set} \hlkwb{<-} \hlkwd{subset}\hlstd{(mtcars, split} \hlopt{==} \hlstr{"FALSE"}\hlstd{)}
-\end{alltt}
 
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in split == "{}FALSE"{}: comparison (1) is possible only for atomic and list types}}\begin{alltt}
 \hlstd{logistric_training_set} \hlkwb{<-} \hlkwd{glm}\hlstd{(}\hlkwc{data} \hlstd{= training_set, am} \hlopt{~} \hlstd{hp} \hlopt{+} \hlstd{mpg,} \hlkwc{family} \hlstd{=} \hlstr{"binomial"}\hlstd{)}
-\end{alltt}
 
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in is.data.frame(data): object 'training\_set' not found}}\begin{alltt}
 \hlstd{res} \hlkwb{<-} \hlkwd{predict}\hlstd{(logistric_training_set, training_set,} \hlkwc{type} \hlstd{=} \hlstr{"response"}\hlstd{)}
-\end{alltt}
 
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in predict(logistric\_training\_set, training\_set, type = "{}response"{}): object 'logistric\_training\_set' not found}}\begin{alltt}
 \hlstd{confmatrix} \hlkwb{<-} \hlkwd{table}\hlstd{(}\hlkwc{Actual_value} \hlstd{= training_set}\hlopt{$}\hlstd{am,} \hlkwc{Predicted_value} \hlstd{= res} \hlopt{>}\hlnum{0.5}\hlstd{)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in table(Actual\_value = training\_set\$am, Predicted\_value = res > : object 'training\_set' not found}}\begin{alltt}
 \hlstd{confmatrix}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'confmatrix' not found}}\begin{alltt}
+\begin{verbatim}
+##             Predicted_value
+## Actual_value FALSE TRUE
+##            0    12    2
+##            1     2    7
+\end{verbatim}
+\begin{alltt}
 \hlstd{(confmatrix[[}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{]]} \hlopt{+} \hlstd{confmatrix[[}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{]])} \hlopt{/} \hlkwd{sum}\hlstd{(confmatrix)}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'confmatrix' not found}}\end{kframe}
+\begin{verbatim}
+## [1] 0.826087
+\end{verbatim}
+\end{kframe}
 \end{knitrout}
 
 
